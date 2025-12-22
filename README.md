@@ -195,7 +195,7 @@ redirect(url('dashboard'));
 ```php
 // In RegisterController
 $token = bin2hex(random_bytes(16));
-$verifyUrl = url('/verify', ['token' => $token, 'email' => $email]);
+$verifyUrl = url('verify', ['token' => $token, 'email' => $email]);
 
 EmailService()->sendEmail($email, "Confirm email", "URL: $verifyUrl");
 
