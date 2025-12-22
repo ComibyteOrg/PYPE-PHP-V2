@@ -192,6 +192,27 @@ redirect(url('dashboard'));
 2. **Send URL**: `url('verify', ['token' => $token, 'email' => $email])`
 3. **Handle Route**: Update `email_verified_at` when tokens match.
 
+```php
+// In RegisterController
+$token = bin2hex(random_bytes(16));
+$verifyUrl = url('/verify', ['token' => $token, 'email' => $email]);
+
+EmailService()->sendEmail($email, "Confirm email", "URL: $verifyUrl");
+
+// In VerifyController
+Route::get('/verify', function() {
+    $token = input('token');
+    $email = input('email');
+
+    // Validate token and update user
+    DB::table('users')->where('email', $email)->update([
+        'email_verified_at' => date('Y-m-d H:i:s')
+    ]);
+    flash('success', 'Email confirmed!');
+});
+```
+
+
 ### 3. Verified User Middleware
 
 Block unverified users from sensitive routes. Create `Core/Middleware/VerifiedMiddleware.php`:
