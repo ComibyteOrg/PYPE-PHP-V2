@@ -1,0 +1,34 @@
+# Pype PHP V2 Git Ignore
+
+# Dependencies
+/vendor
+/node_modules
+
+# Environment
+.env
+.env.local
+.env.testing
+.env.*.local
+
+# Database
+/*.sqlite
+/*.sqlite-journal
+
+# Storage & Logs
+/Storage/logs/*.log
+/Storage/framework/cache/*
+/Storage/framework/sessions/*
+/Storage/framework/views/*
+/Storage/uploads/*
+!/Storage/uploads/.gitkeep
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.exe
+*.dll
+
+# App Data
+/.gemini
