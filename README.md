@@ -56,10 +56,9 @@ Pype PHP V2 is a lightweight, expressive, and powerful PHP framework designed fo
 - Extensions: `pdo`, `mbstring`, `openssl`, `curl`. `Twig Language 2`
 
 ### 2. Installation
-
+> [!IMPORTANT] > Create Your project Folder Before proceeeding with the Instalation
 ```bash
-git clone https://github.com/ComibyteOrg/PYPE-PHP-V2.git
-cd PYPE-PHP-V2
+git clone https://github.com/ComibyteOrg/PYPE-PHP-V2.git .
 composer install
 cp .env.example .env
 ```
