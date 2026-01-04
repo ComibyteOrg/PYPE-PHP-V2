@@ -65,7 +65,7 @@ class DB extends Connect
     // WHERE
     public function where($column, $value, $operator = '=')
     {
-        error_log("DB::where called with column: $column, value: $value, operator: $operator");
+        // error_log("DB::where called with column: $column, value: $value, operator: $operator");
         self::$where[] = ['AND', $column, $operator, $value];
         return $this;
     }
@@ -197,7 +197,7 @@ class DB extends Connect
     // Execute query
     protected function run($sql, $bindValues)
     {
-        error_log("DB::run executing SQL: $sql with bind values: " . json_encode($bindValues));
+        // error_log("DB::run executing SQL: $sql with bind values: " . json_encode($bindValues));
 
         if ($this->debug) {
             echo "SQL: $sql\n";
@@ -206,18 +206,18 @@ class DB extends Connect
 
         $stmt = $this->connection->prepare($sql);
         $result = $stmt->execute($bindValues);
-        error_log("DB::run execute result: " . ($result ? 'true' : 'false'));
+        // error_log("DB::run execute result: " . ($result ? 'true' : 'false'));
         return $stmt;
     }    // FETCH ALL
     public function get()
     {
-        error_log("DB::get called on table " . self::$table);
+        // error_log("DB::get called on table " . self::$table);
         $bindValues = [];
         $sql = $this->buildQuery($bindValues);
-        error_log("SQL Query: $sql");
+        // error_log("SQL Query: $sql");
         $stmt = $this->run($sql, $bindValues);
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        error_log("Query result count: " . count($data));
+        // error_log("Query result count: " . count($data));
 
         self::reset();
         return $data;
@@ -226,20 +226,20 @@ class DB extends Connect
     // FETCH FIRST ROW
     public function first()
     {
-        error_log("DB::first called on table " . self::$table);
+        // error_log("DB::first called on table " . self::$table);
         $this->limit(1);
         $data = $this->get();
         $result = $data[0] ?? null;
-        error_log("DB::first result: " . json_encode($result));
+        // error_log("DB::first result: " . json_encode($result));
         return $result;
     }
 
     // FIND BY ID
     public function find($id)
     {
-        error_log("DB::find called on table " . self::$table . " with id: $id");
+        // error_log("DB::find called on table " . self::$table . " with id: $id");
         $result = $this->where('id', $id)->first();
-        error_log("DB::find result: " . json_encode($result));
+        // error_log("DB::find result: " . json_encode($result));
         return $result;
     }
 
@@ -300,18 +300,18 @@ class DB extends Connect
     // INSERT
     public function insert($data)
     {
-        error_log("DB::insert called on table " . self::$table . " with data: " . json_encode($data));
+        // error_log("DB::insert called on table " . self::$table . " with data: " . json_encode($data));
         $columns = implode(',', array_keys($data));
         $placeholders = implode(',', array_fill(0, count($data), '?'));
 
         $sql = "INSERT INTO " . self::$table . " ($columns) VALUES ($placeholders)";
-        error_log("SQL: $sql");
+        // error_log("SQL: $sql");
         $stmt = $this->connection->prepare($sql);
         $result = $stmt->execute(array_values($data));
-        error_log("Insert result: " . ($result ? 'true' : 'false'));
+        // error_log("Insert result: " . ($result ? 'true' : 'false'));
 
         $id = $this->connection->lastInsertId();
-        error_log("Last insert ID: $id");
+        // error_log("Last insert ID: $id");
 
         self::reset();
         return $id;
@@ -320,7 +320,7 @@ class DB extends Connect
     // UPDATE
     public function update($data, $where)
     {
-        error_log("DB::update called on table " . self::$table . " with data: " . json_encode($data) . " and where: " . json_encode($where));
+        // error_log("DB::update called on table " . self::$table . " with data: " . json_encode($data) . " and where: " . json_encode($where));
         $set = implode(', ', array_map(fn($col) => "$col = ?", array_keys($data)));
 
         $instance = new static();
@@ -332,7 +332,7 @@ class DB extends Connect
         $whereClause = $instance->buildWhere($bindValues);
 
         $sql = "UPDATE " . self::$table . " SET $set $whereClause";
-        error_log("SQL: $sql");
+        // error_log("SQL: $sql");
 
         $stmt = $this->run($sql, $bindValues);
 
