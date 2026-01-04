@@ -277,13 +277,13 @@
             $values = array_values($datas);
 
             if ($this->connection instanceof mysqli) {
-                error_log("Executing SQL: $sql");
-                error_log("Values: " . print_r($values, true));
+                // // error_log("Executing SQL: $sql");
+                // // error_log("Values: " . print_r($values, true));
                 
                 $stmt = $this->connection->prepare($sql);
                 if ($stmt == false) {
                     $error = $this->connection->error;
-                    error_log("Prepare failed: $error");
+                    // // error_log("Prepare failed: $error");
                     throw new \RuntimeException("Failed to prepare statement: ($error)");
                 }
 
@@ -297,17 +297,17 @@
                         $types .= 's';
                     }
                 }
-                error_log("Param types: $types");
+                // // error_log("Param types: $types");
                 
                 try {
                     $stmt->bind_param($types, ...$values);
                     $result = $stmt->execute();
                     if (!$result) {
-                        error_log("Execute failed: " . $stmt->error);
+                        // // error_log("Execute failed: " . $stmt->error);
                     }
                     return $result;
                 } catch (\Exception $e) {
-                    error_log("Database error: " . $e->getMessage());
+                    // // error_log("Database error: " . $e->getMessage());
                     throw $e;
                 }
             }
