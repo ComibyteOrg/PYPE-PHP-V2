@@ -59,8 +59,8 @@ Pype PHP V2 is a lightweight, expressive, and powerful PHP framework designed fo
 > [!IMPORTANT] > Create Your project Folder Before proceeeding with the Instalation
 ```bash
 git clone https://github.com/ComibyteOrg/PYPE-PHP-V2.git .
-composer install
-cp .env.example .env
+ mv PYPE-PHP-V2/* ./
+php pype.php
 ```
 
 ### 3. Setup Database
